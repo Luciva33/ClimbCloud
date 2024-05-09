@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; //LoadSceneを使うために必要
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,4 +52,11 @@ public class PlayerController : MonoBehaviour
         this.animator.speed = speedx / 2.0f;
 
     }
+    //ゴールに到達
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("GOAL!!");
+        SceneManager.LoadScene("ClearScene");
+    }
+
 }
