@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigit2D;
     Animator animator;
-    float jumpForce = 340.0f;
+    float jumpForce = 550.0f;
     float walkForce = 30.0f;
     float maxWalkSpeed = 2.0f;
 
@@ -22,8 +22,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //ジャンプする
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && this.rigit2D.velocity.y == 0)
+        //ジャンプ条件に、プレイヤーのY方向の速度が０かどうか判定
+        //プレイヤーの速度は、Rigidbody2Dクラスのvelocityで取得できる
         {
+            this.animator.SetTrigger("JumpTrigger");
             this.rigit2D.AddForce(transform.up * this.jumpForce);
             // this.rigit2D.AddForce(Vector2.up * this.jumpForce); //ネコちゃんの位置関係なくグローバル空間に力を加える
         }
@@ -50,6 +53,12 @@ public class PlayerController : MonoBehaviour
 
         //プレイヤーの速度に応じてアニメーション速度を変える
         this.animator.speed = speedx / 2.0f;
+
+        //画面外に出た場合は、最初から
+        if (transform.position.y < -10)
+        {
+            SceneManager.LoadScene("GameScene");
+        }
 
     }
     //ゴールに到達
